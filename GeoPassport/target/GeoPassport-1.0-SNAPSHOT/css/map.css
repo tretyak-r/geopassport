@@ -1,0 +1,76 @@
+.map {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;}
+.map .ol-zoom .ol-zoom-out {
+    margin-top: 204px;}
+.map .ol-zoomslider {
+    background-color: transparent;
+    top: 67px;}
+.map .ol-touch .ol-zoom .ol-zoom-out {
+    margin-top: 212px;}
+.map .ol-touch .ol-zoomslider {
+    top: 500px;}
+.map .ol-zoom-in.ol-has-tooltip:hover [role=tooltip],
+.map .ol-zoom-in.ol-has-tooltip:focus [role=tooltip] {
+    top: 3px;}
+.map .ol-zoom-out.ol-has-tooltip:hover [role=tooltip],
+.map .ol-zoom-out.ol-has-tooltip:focus [role=tooltip] {
+    top: 232px;}
+
+.ol-rotate {
+    display: none;}
+            
+.ol-zoom{
+    top: 40px;}
+.ol-control {
+    background: #2F0202;
+    opacity: 0.8;}
+.ol-control:hover {
+    background: #2F0202;
+    opacity: 0.8;}
+.ol-control button {
+    background: wheat;
+    color: #2F0202;}
+.ol-control button:focus, .ol-control button:hover {
+    background: white;
+    color: #2F0202;}
+.ol-zoomslider-thumb {
+    background: wheat;}
+.ol-zoomslider-thumb:focus, .ol-zoomslider-thumb:hover {
+    background: white;}
+
+.tooltip {
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    color: white;
+    padding: 4px 8px;
+    opacity: 0.7;
+    white-space: nowrap;}
+.tooltip-measure {
+    opacity: 1;
+    font-weight: bold;}
+.tooltip-static {
+    background-color: #ffcc33;
+    color: #255625;
+    border: 1px solid white;}
+.tooltip-measure:before, .tooltip-static:before {
+    border-top: 6px solid rgba(0, 0, 0, 0.5);
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    margin-left: -7px;
+    left: 50%;}
+.tooltip-static:before {
+    border-top-color: #ffcc33;}     
+
+#mouse-position {position: absolute;
+    bottom: 0px;
+    left: 5px;}

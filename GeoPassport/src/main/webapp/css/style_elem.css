@@ -1,0 +1,191 @@
+/*Верхняя панель*/
+#header {
+    position: fixed;
+    background: #2F0202;
+    width: 100%;
+    height: 34px;
+    z-index: 1;
+    text-indent: 0.5em;
+    opacity: 0.8;
+    left: 0px;}
+
+/*Общий стиль кнопок*/
+#measure, #cancelMeasure, #clearMeasure, #paintAndEdit, #cancelPaint,
+#cancelEdit, #deletePaint, #paint, #edit, #cancelPaint2, #cancelEdit2, #deletePaint2 {
+    position: fixed;
+    text-align: center;
+    background: wheat;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #2F0202;
+    opacity: 0.8;}
+#measure:focus, #cancelMeasure:focus, #clearMeasure:focus, #paintAndEdit:focus, 
+#cancelPaint:focus, #cancelEdit:focus, #deletePaint:focus, #paint:focus, #edit:focus,
+#cancelPaint2:focus, #cancelEdit2:focus, #deletePaint2:focus, 
+#measure:hover,#cancelMeasure:hover, #clearMeasure:hover, #paintAndEdit:hover,
+#cancelPaint:hover,#cancelEdit:hover, #deletePaint:hover,  #paint:hover, #edit:hover,
+#cancelPaint2:hover, #cancelEdit2:hover, #deletePaint2:hover {
+    background: white;}         
+
+#paint {
+    left: 40px;
+    top: 40px;}
+
+#edit {
+    left: 40px;
+    top: 78px;}
+
+/*Кнопка открытия функционала измерения*/
+#measure {
+    left: 40px;
+    top: 40px;}
+
+/*Кнопка закрытия функционала измерения*/
+#cancelMeasure {
+    left: 212px;
+    top: 40px;
+    display: none;}
+
+/*Кнопка очищения слоя измерения*/
+#clearMeasure {
+    left: 163px;
+    top: 40px;
+    display: none;}
+
+/*Кнопка открытия функционала нанесения объектов на карту*/
+#paintAndEdit {
+    left: 40px;
+    top: 78px;}
+
+/*Кнопка закрытия функционала нанесения объектов на карту*/      
+#cancelPaint {
+    left: 361px;
+    top: 78px;
+    display: none;}
+
+#cancelPaint2 {
+    left: 287px;
+    top: 40px;
+    display: none;}
+
+/*Кнопка закрытия функционала редактирования объектов на карте*/  
+#cancelEdit {
+    left: 286px;
+    top: 78px;
+    display: none;}
+
+#cancelEdit2 {
+    left: 212px;
+    top: 78px;
+    display: none;
+    }
+
+/*Кнопка удаления объектов с карты*/              
+#deletePaint {
+    left: 237px;
+    top: 78px;
+    display: none;}
+
+#deletePaint2 {
+    top: 78px;
+    left: 163px;
+    display: none;}
+
+/*Общие стиль кнопок на верхней панели*/
+#log_in, #selects_modes {position: fixed;
+    text-align: center;
+    color: wheat;
+    background: #2F0202 ;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: wheat;
+    opacity: 0.8;
+    z-index: 1;}
+#log_in:focus, #selects_modes:focus, #log_in:hover, #selects_modes:hover {
+    background: #4E0101;}
+
+/*Кнопка входа в всистему*/
+#log_in {
+    right: 10px;
+    top: 3px;}    
+
+/*Выбор режимов работы*/
+#selects_modes {
+    left: 250px;
+    top: 3px;}
+
+/*Общие стили для радиокнопок*/
+.geometryMeasure, .paintOrEdit, .geometryPaint, .changeOrMoving,
+ .geometryPaint2, .changeOrMoving2{
+    border-radius: 5px;
+    border: 3px solid #2F0202;
+    position: fixed;
+    font: 14px Tahoma;
+    opacity: 0.8;
+    display: none;}
+.geometryMeasure div, .paintOrEdit div, .geometryPaint div, .changeOrMoving div, 
+.geometryPaint2 div, .changeOrMoving2 div {
+    float: left;}
+.geometryMeasure input, .paintOrEdit input, .geometryPaint input, .changeOrMoving input,
+.geometryPaint2 input, .changeOrMoving2 input {
+    position: absolute;
+    left: -9999px;}
+.geometryMeasure label, .paintOrEdit label, .geometryPaint label, .changeOrMoving label, 
+.geometryPaint2 label, .changeOrMoving2 label {
+    display: block;
+    margin: 0 0 0 -1px;
+    padding: 2px 4px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .12);
+    cursor: pointer;
+    opacity: 0.8;}
+.geometryMeasure label:focus, .paintOrEdit label:focus,
+.geometryPaint label:focus, .changeOrMoving label:focus,
+.geometryMeasure label:hover, .paintOrEdit label:hover,
+.geometryPaint label:hover, .changeOrMoving label:hover,
+.geometryPaint2 label:hover, .changeOrMoving2 label:hover{
+    background: wheat;}
+.paintOrEdit input:checked + label, .geometryMeasure input:checked + label, 
+.geometryPaint input:checked + label, .changeOrMoving input:checked + label,
+.geometryPaint2 input:checked + label, .changeOrMoving2 input:checked + label{
+    background: wheat;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, .2);}
+.geometryMeasure div:first-child label, .paintOrEdit div:first-child label,
+.geometryPaint div:first-child label, .changeOrMoving div:first-child label,
+.geometryPaint2 div:first-child label, .changeOrMoving2 div:first-child label{
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;}
+.geometryMeasure div:last-child label, .paintOrEdit div:last-child label,
+.geometryPaint div:last-child label, .changeOrMoving div:last-child label,
+.changeOrMoving2 div:last-child label, .geometryPaint2 div:last-child label{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;}
+
+/*Выбор измерения*/
+.geometryMeasure{
+    top: 40px;
+    left: 89px;}
+
+/*Выбор рисования или редактирования*/
+.paintOrEdit {
+    top: 78px;
+    left: 89px;}
+
+/*Выбор типа геометрии для рисования*/
+.geometryPaint {
+    top: 78px;
+    left: 163px;}
+
+.geometryPaint2 {
+    top: 40px;
+    left: 89px;}
+
+/*Выбор редактирования объектов или перемещение объектов*/
+.changeOrMoving {
+    top: 78px;
+    left: 163px;}
+
+.changeOrMoving2 {
+    top: 78px;
+    left: 89px;}

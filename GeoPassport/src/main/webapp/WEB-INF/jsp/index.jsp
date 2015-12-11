@@ -8,12 +8,15 @@
         
         <script src="<c:url value="/js/jquery-1.11.3.min.js" />" > </script>
         
-        <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css" />" type="text/css">
+        <link rel="stylesheet" href="<c:url value="/css/lib/bootstrap.min.css" />" type="text/css">
         <script src="<c:url value="/js/bootstrap.min.js" />" > </script>
         
-        <link rel="stylesheet" type="text/css" href="<c:url value="/css/ol.css" />">
+        <link rel="stylesheet" type="text/css" href="<c:url value="/css/lib/ol.css" />">
         <script src="<c:url value="/js/ol.js" />" > </script>
-        <link rel="stylesheet" href="<c:url value="/css/style.css" />" type="text/css">
+        
+        <link rel="stylesheet" href="<c:url value="/css/style_elem.css" />" type="text/css">
+        <link rel="stylesheet" href="<c:url value="/css/map.css" />" type="text/css">
+        <link rel="stylesheet" href="<c:url value="/css/modal_windows.css" />" type="text/css">
         
     </head>
     <body>
@@ -30,30 +33,9 @@
             </div>
             
             <div class="span6" id="mouse-position">&nbsp;</div>
-            
-            <div id="geometryMeasure" class="geometryMeasure">
-                <div>
-                    <input type="radio" name="option1" id="lineMeasure" checked />
-                    <label for="lineMeasure"><img src="<c:url value="/images/lineMeasure.png" />" width="24" height="24" ></label>
-                </div>
-                <div>
-                    <input type="radio" name="option1" id="polygonMeasure" />
-                    <label for="polygonMeasure"><img src="<c:url value="/images/area.png" />" width="24" height="24" ></label>
-                </div>
-            </div>
+              
                 
-            <div id="paintOrEdit" class="paintOrEdit">
-                <div>
-                    <input type="radio" name="option2" id="paint" checked />
-                    <label for="paint"><img src="<c:url value="/images/paint.png" />" width="24" height="24" ></label>
-                </div>
-                <div>
-                    <input type="radio" name="option2" id="edit" />
-                    <label for="edit"><img src="<c:url value="/images/edit.png" />" width="24" height="24" ></label>
-                </div>
-            </div>
-                
-            <div id="changeOrMoving" class="changeOrMoving">
+            <div id="changeOrMoving2" class="changeOrMoving2">
                 <div>
                     <input type="radio" name="option4" id="change" checked />
                     <label for="change"><img src="<c:url value="/images/change.png" />" width="24" height="24" ></label>
@@ -64,7 +46,7 @@
                 </div>
             </div>    
                 
-            <div id="geometryPaint" class="geometryPaint">
+            <div id="geometryPaint2" class="geometryPaint2">
                 <div>
                     <input type="radio" name="option3" id="pointPaint" checked />
                     <label for="pointPaint"><img src="<c:url value="/images/pointPaint.png" />" width="24" height="24" ></label>
@@ -90,17 +72,38 @@
                     <label for="boxPaint"><img src="<c:url value="/images/boxPaint.png" />" width="24" height="24" ></label>
                 </div>
             </div>
-                
-            <button id="measure"><img src="<c:url value="/images/measure.png" />" width="26" height="26" ></button>
-            <button id="cancelMeasure"><img src="<c:url value="/images/cancel.png" />" width="26" height="26" ></button>
-            <button id="clearMeasure"><img src="<c:url value="/images/clear.png" />" width="26" height="26" ></button>
-            
-            <button id="cancelEdit"><img src="<c:url value="/images/cancel.png" />" width="26" height="26" ></button>
 
-            <button id="paintAndEdit"><img src="<c:url value="/images/PaintAndEdit.png" />" width="26" height="26" ></button>
-            <button id="cancelPaint"><img src="<c:url value="/images/cancel.png" />" width="26" height="26" ></button>
-            <button id="deletePaint"><img src="<c:url value="/images/clear.png" />" width="26" height="26" ></button>
+                
+            <button id="paint"><img src="<c:url value="/images/paint.png" />" width="26" height="26" ></button>
+            <button id="edit"><img src="<c:url value="/images/edit.png" />" width="26" height="26" ></button>
             
+            
+            <button id="cancelEdit2"><img src="<c:url value="/images/cancel.png" />" width="26" height="26" ></button>
+
+            <button id="cancelPaint2"><img src="<c:url value="/images/cancel.png" />" width="26" height="26" ></button>
+            <button id="deletePaint2"><img src="<c:url value="/images/clear.png" />" width="26" height="26" ></button>
+            
+            
+            <button id="log_in"><font size="2"> <b>Войти</b> </font></button>
+            <font size="3"><select id="selects_modes" name="selects_modes">
+                <option>Режим анализа</option>
+                <option>Режим редактирования</option>
+                <option>Режим объекта</option>
+                <option>Режим администрирования</option>
+            </select></font>
+            
+            
+            <div id="modal_form"><!-- Сaмo oкнo --> 
+                    <span id="modal_close">X</span> <!-- Кнoпкa зaкрыть --> 
+                    <form>
+                        <label>Введите имя пользователя</label>
+                        <input type="text" name="" value="" />
+                        <label>Введите пароль</label>
+                        <input type="password" name="" value="" />
+                        <input type="submit" value="Войти в систему" />
+                    </form>
+            </div>
+            <div id="overlay"></div><!-- Пoдлoжкa -->
         </div>
             
         <script>
@@ -120,40 +123,23 @@
             });
             
             // Добавление источников */
-            var sourceMeasure = new ol.source.Vector();
             var sourcePaint = new ol.source.Vector({wrapX: false});
             
+            /*
             var sourceWMS = new ol.source.TileWMS({
                             url: 'http://172.20.12.15:8080/geoserver/PostGIS/wms',
                             params: {LAYERS: 'PostGIS:World_Map', VERSION: '1.1.1'}
-                        });
+                        });*/
+            /*
             // Добавление слоя WMS
             var vectorWMS = new ol.layer.Tile({                    
                                 source: sourceWMS
                             });
-            
+            */
+           
             //Добавление слоя OSM
             var OSM = new ol.layer.Tile({source: new ol.source.OSM()});
-       
-            //Добавление слоя для измерения
-            var vectorMeasure = new ol.layer.Vector({
-                source: sourceMeasure,
-                style: new ol.style.Style({
-                    fill: new ol.style.Fill({
-                        color: 'rgba(255, 255, 255, 0.2)'
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: '#ffcc33',
-                        width: 2
-                    }),
-                    image: new ol.style.Circle({
-                        radius: 7,
-                        fill: new ol.style.Fill({
-                        color: '#ffcc33'
-                        })
-                    })
-                })
-            });            
+          
             //Добавление слоя для рисования
             var vectorPaint = new ol.layer.Vector({
                 source: sourcePaint,
@@ -173,14 +159,12 @@
                     })
                 })
             });
-            
+
+
             //---------Дополнительные настройки карты
             
             //Фокус карты
             var center = ol.proj.fromLonLat([41.9702, 45.0448]);
-
-            //Присваивание переменной, которая будет учитывать кривизну земли при расчете
-            var wgs84Sphere = new ol.Sphere(6378137);
             
             //---------Создание карты
             var map = new ol.Map({
@@ -190,184 +174,79 @@
                     collapsible: false
                     })
                 }).extend([mousePositionControl,zoomslider]),
-                layers: [OSM, vectorMeasure, vectorPaint],
+                layers: [OSM, vectorPaint],
                 target: 'map',
                 view: new ol.View({
                     center: center,
                     zoom: 12
                 })
             });
-    
-//------------------------------------------------------------------------------
-            //Кнопка измерения
-            var buttonsMeasure = document.getElementById('measure');
-            
-            //Радиокнопка выбора геометрии измерения                      
-            var typeSelectMeasure = document.getElementById('geometryMeasure');
-            
-            //Кнопка очистить измерения
-            var buttonsClearMeasure = document.getElementById('clearMeasure');
-            
-            //Кнопка закрыть измерения
-            var buttonsCancelMeasure = document.getElementById('cancelMeasure');
 //------------------------------------------------------------------------------            
      
             //Кнопка рисования и редактирования
-            var buttonsPaintAndEdit = document.getElementById('paintAndEdit');
+            var buttonsPaint = document.getElementById('paint');
 
             //Радиокнопка выбора рисования и редактирования
-            var typeSelectPaintOrEdit = document.getElementById('paintOrEdit');
+            var buttonsEdit = document.getElementById('edit');
             
             //Радиокнопка выбора геометрии рисования
-            var typeSelectPaint = document.getElementById('geometryPaint');
+            var typeSelectPaint = document.getElementById('geometryPaint2');
             
             //Кнопка закончить рисование
-            var buttonsCancelPaint = document.getElementById('cancelPaint');
+            var buttonsCancelPaint = document.getElementById('cancelPaint2');
             
             //Радиокнопка выбора редактирования и перемещения
-            var typeSelectChangeOrMoving = document.getElementById('changeOrMoving');
+            var typeSelectChangeOrMoving = document.getElementById('changeOrMoving2');
 
             //Кнопка очистить измерения
-            var buttonsDeleteAllPaint = document.getElementById('deletePaint');
+            var buttonsDeleteAllPaint = document.getElementById('deletePaint2');
             
             //Кнопка закрыть измерения
-            var buttonsCancelEdit = document.getElementById('cancelEdit'); 
-           
-           
-            //Обработчик кнопки измерения
-            buttonsMeasure.onclick = function(e) {
-                //скрытие элементов
-                typeSelectPaintOrEdit.style.display = "none";
-                typeSelectPaint.style.display = "none";
-                typeSelectChangeOrMoving.style.display = "none";
-                buttonsDeleteAllPaint.style.display = "none"; 
-                buttonsCancelPaint.style.display = "none";
-                buttonsCancelEdit.style.display = "none";
-                
-                map.removeInteraction(drawPaint);
-                Modify.setActive(false);
-                map.removeInteraction(moving);
-                
-                typeSelectMeasure.style.display = "block";
-                buttonsClearMeasure.style.display = "block"; 
-                buttonsCancelMeasure.style.display = "block"; 
+            var buttonsCancelEdit = document.getElementById('cancelEdit2'); 
 
-                //Определение координат действия курсора мыши
-                map.on('pointermove', pointerMoveHandler);
-                $(map.getViewport()).on('mouseout', function() {
-                    $(helpTooltipElement).addClass('hidden');
-                }); 
-                addInteractionMeasure();
-            };
+            var select = new ol.interaction.Select({
+                condition: ol.events.condition.click
+            });
 
-            //Обработчик радиокнопки выбора геометрии измерения
-            typeSelectMeasure.onchange = function(e) {
-                map.removeInteraction(drawMeasure);
-                addInteractionMeasure();
-            };
-            
-            //Обработчик кнопки очистить измерения
-            buttonsClearMeasure.onclick = function(e) {
-                sourceMeasure.clear();
-                map.getOverlays().clear();
-                map.removeInteraction(drawMeasure);
-                addInteractionMeasure();
-            };
-            
-
-            //Обработчик кнопки закрыть 
-            buttonsCancelMeasure.onclick = function(e) {
-                typeSelectMeasure.style.display = "none";
-                buttonsClearMeasure.style.display = "none"; 
-                buttonsCancelMeasure.style.display = "none";
-                
-                map.removeInteraction(drawMeasure);
-                
-                map.un('pointermove', pointerMoveHandler);
-                sourceMeasure.clear();
-                map.getOverlays().clear();
-            };
-            
 //------------------------------------------------------------------------------
             //Обработчик кнопки рисования
-            buttonsPaintAndEdit.onclick = function(e) {
-                typeSelectMeasure.style.display = "none";
-                buttonsClearMeasure.style.display = "none"; 
-                buttonsCancelMeasure.style.display = "none";
-
-                map.removeInteraction(drawMeasure);
-                
-                map.un('pointermove', pointerMoveHandler);
-                sourceMeasure.clear();
+            buttonsPaint.onclick = function(e) {
                 map.getOverlays().clear();
+                Modify.setActive(false);
+                map.removeInteraction(select);
+                map.removeInteraction(moving);
                 
-                typeSelectPaintOrEdit.style.display = "block";
+                typeSelectChangeOrMoving.style.display = "none";
+                buttonsDeleteAllPaint.style.display = "none";
+                buttonsCancelEdit.style.display = "none";
                 
-                map.removeInteraction(drawPaint);
+                typeSelectPaint.style.display = "block";
+                buttonsCancelPaint.style.display = "block";
                 
-                if(document.getElementById('paint').checked){
-                    
-                    typeSelectPaint.style.display = "block";
-                    buttonsCancelPaint.style.display = "block";
 
-                    addInteractionPaint();
-
-                }
-                if(document.getElementById('edit').checked){
-                    
-                    typeSelectChangeOrMoving.style.display = "block";
-                    buttonsDeleteAllPaint.style.display = "block";
-                    buttonsCancelEdit.style.display = "block";
-                    
-                    
-                    if(document.getElementById('change').checked){
-                        Modify.setActive(true);
-                    }
-                    if(document.getElementById('moving').checked){
-                        map.addInteraction(moving);
-                    }
-                }
+                addInteractionPaint();
             };
 
 
             //Обработчик радиокнопки выбора рисования или редактирования
-            typeSelectPaintOrEdit.onchange = function(e) {
+            buttonsEdit.onclick = function(e) {
                 
-                if(document.getElementById('paint').checked){
-                    
-                    typeSelectChangeOrMoving.style.display = "none";
-                    buttonsDeleteAllPaint.style.display = "none";
-                    buttonsCancelEdit.style.display = "none";
-                    
-                    Modify.setActive(false);
-                    map.removeInteraction(moving);
-                    
-                    typeSelectPaint.style.display = "block";
-                    buttonsCancelPaint.style.display = "block";
-
-                    addInteractionPaint();
+                map.removeInteraction(drawPaint);
+                
+                typeSelectPaint.style.display = "none";
+                buttonsCancelPaint.style.display = "none";
+                
+                typeSelectChangeOrMoving.style.display = "block";
+                buttonsDeleteAllPaint.style.display = "block";
+                buttonsCancelEdit.style.display = "block";
+                
+                if(document.getElementById('change').checked){
+                    Modify.setActive(true);
                 }
-                
-                if(document.getElementById('edit').checked){
-                    
-                    typeSelectPaint.style.display = "none";
-                    buttonsCancelPaint.style.display = "none";
-                    
-                    map.removeInteraction(drawPaint);
-                    
-                    typeSelectChangeOrMoving.style.display = "block";
-                    buttonsDeleteAllPaint.style.display = "block";
-                    buttonsCancelEdit.style.display = "block"; 
-                    
-                    
-                    if(document.getElementById('change').checked){
-                        Modify.setActive(true);
-                    }
-                    if(document.getElementById('moving').checked){
-                        map.addInteraction(moving);
-                    }
+                if(document.getElementById('moving').checked){
+                    map.addInteraction(moving);
+                    changeInteraction();
                 }
-                
             };
 
             //Обработчик радиокнопки выбора геометрии рисования
@@ -378,24 +257,25 @@
 
             //Обработчик кнопки закрыть рисование 
             buttonsCancelPaint.onclick = function(e) {
-                
-                typeSelectPaintOrEdit.style.display = "none";
+
                 typeSelectPaint.style.display = "none";
                 buttonsCancelPaint.style.display = "none";
                 
                 map.removeInteraction(drawPaint);
             };
 
-            //Обработчик радиокнопки выбора рисования или редактирования
+            //Обработчик радиокнопки выбора изменения или перемещения
             typeSelectChangeOrMoving.onchange = function(e) {
                 
                 if(document.getElementById('change').checked){
                     map.removeInteraction(moving);
+                    map.removeInteraction(select);
                     Modify.setActive(true);
                 }
                 
                 if(document.getElementById('moving').checked){
                     Modify.setActive(false);
+                    changeInteraction();
                     map.addInteraction(moving);
 
                 }
@@ -404,19 +284,24 @@
 
             //Обработчик кнопки очистить
             buttonsDeleteAllPaint.onclick = function(e) {
-                sourcePaint.clear();
+                
+                select.getFeatures();
+
+                
+                sourcePaint.removeFeature();
+                
             };
 
             //Обработчик кнопки закрыть редактирование 
             buttonsCancelEdit.onclick = function(e) {
                 
-                typeSelectPaintOrEdit.style.display = "none";
                 typeSelectChangeOrMoving.style.display = "none";
                 
                 buttonsDeleteAllPaint.style.display = "none"; 
                 buttonsCancelEdit.style.display = "none";
                 
                 map.removeInteraction(moving);
+                map.removeInteraction(select);
                 Modify.setActive(false);
             };
             
@@ -429,8 +314,8 @@
                     ol.interaction.Pointer.call(this, {
                       handleDownEvent: app.Drag.prototype.handleDownEvent,
                       handleDragEvent: app.Drag.prototype.handleDragEvent,
-                      handleMoveEvent: app.Drag.prototype.handleMoveEvent,
-                      handleUpEvent: app.Drag.prototype.handleUpEvent
+                      handleMoveEvent: app.Drag.prototype.handleMoveEvent
+                      //handleUpEvent: app.Drag.prototype.handleUpEvent
                     });
                     this.coordinate_ = null;
                     this.cursor_ = 'pointer';
@@ -459,12 +344,12 @@
                 
                 app.Drag.prototype.handleDragEvent = function(evt) {
                     var map = evt.map;
-
+/*
                     var feature = map.forEachFeatureAtPixel(evt.pixel,
                         function(feature, layer) {
                           return feature;
                         });
-
+*/
                     var deltaX = evt.coordinate[0] - this.coordinate_[0];
                     var deltaY = evt.coordinate[1] - this.coordinate_[1];
 
@@ -484,7 +369,8 @@
                             return feature;
                           });
                       var element = evt.map.getTargetElement();
-                      if (feature) {
+                      
+                    if (feature) {
                         if (element.style.cursor !== this.cursor_) {
                           this.previousCursor_ = element.style.cursor;
                           element.style.cursor = this.cursor_;
@@ -591,6 +477,22 @@
             Modify.setActive(false);
       
 //------------------------------------------------------------------------------ 
+//----------Функциональный блок выделение объектов на карте              
+            var changeInteraction = function() {
+                if (select !== null) {
+                    map.addInteraction(select);
+                    select.on('select', function(e) {
+                      $('#status').html('&nbsp;' + e.target.getFeatures().getLength() +
+                          ' selected features (last operation selected ' + e.selected.length +
+                          ' and deselected ' + e.deselected.length + ' features)');
+                    });
+                }
+            };    
+      
+//------------------------------------------------------------------------------ 
+
+
+
 //          //Выделение объекта     
 
             var snap = new ol.interaction.Snap({
@@ -599,218 +501,7 @@
             map.addInteraction(snap);
 
 //----------Конец функционального блока рисования--------------------------------------------------------------------             
-            
-//----------Функциональный блок определения длины и площади геометрии-----------
-
-            //Объявление переменных---------------------------------------------
-
-            //Переменная для создания эскиза для слоя измерений
-            var sketch;
-            
-            //Переменные для создания и заполнения тултипов подсказок
-            var helpTooltipElement;
-            var helpTooltip;
-            
-            //Переменные для создания и заполнения тултипов измерения    
-            var measureTooltipElement;
-            var measureTooltip;
-            
-            //Статические переменные, используемые в туотипах подсказок 
-            var continuePolygonMsg = 'Нарисуйте полигон для измерения площади';
-            var continueLineMsg = 'Нарисуйте линию для измерения длины';
-
-            //Переменная для рисования
-            var drawMeasure;
-
-     
-//------------------------------------------------------------------------------ 
-            //Заполнение переменной тултипов подсказок
-            var pointerMoveHandler = function (evt) {
-                if (evt.dragging) {
-                    return;
-                }
-                var helpMsg = 'Для начала рисования укажите точку';
-
-                if (sketch) {
-                    var geom = (sketch.getGeometry());
-                    if (geom instanceof ol.geom.Polygon) {
-                        helpMsg = continuePolygonMsg;
-                    } else if (geom instanceof ol.geom.LineString) {
-                        helpMsg = continueLineMsg;
-                    }
-                }
-
-                helpTooltipElement.innerHTML = helpMsg;
-                helpTooltip.setPosition(evt.coordinate);
-                $(helpTooltipElement).removeClass('hidden');
-            };
-//------------------------------------------------------------------------------ 
-            
-            //Рисование линии или полигона при измерении
-            function addInteractionMeasure() {
-                
-                var type;
-                
-                if(document.getElementById('lineMeasure').checked){
-                    type = 'LineString';
-                }
-                
-                if(document.getElementById('polygonMeasure').checked){
-                    type = 'Polygon';
-                }
-        
-                drawMeasure = new ol.interaction.Draw({
-                    source: sourceMeasure,
-                    type: /** @type {ol.geom.GeometryType} */ (type),
-                    style: new ol.style.Style({
-                        fill: new ol.style.Fill({
-                            color: 'rgba(255, 255, 255, 0.2)'
-                        }),
-                        stroke: new ol.style.Stroke({
-                            color: 'rgba(0, 0, 0, 0.5)',
-                            lineDash: [10, 10],
-                            width: 2
-                        }),
-                        image: new ol.style.Circle({
-                            radius: 5,
-                            stroke: new ol.style.Stroke({
-                                color: 'rgba(0, 0, 0, 0.7)'
-                            }),
-                            fill: new ol.style.Fill({
-                                color: 'rgba(255, 255, 255, 0.2)'
-                            })
-                        })
-                    })
-                });
-
-                map.addInteraction(drawMeasure);
-
-                createMeasureTooltip();
-                createHelpTooltip();
-
-                var listener;
-                drawMeasure.on('drawstart',
-                    function(evt) {
-                        // set sketch
-                        sketch = evt.feature;
-
-                        /** @type {ol.Coordinate|undefined} */
-                        var tooltipCoord = evt.coordinate;
-
-                        listener = sketch.getGeometry().on('change', function(evt) {
-                            var geom = evt.target;
-                            var output;
-                            if (geom instanceof ol.geom.Polygon) {
-                                output = formatArea(/** @type {ol.geom.Polygon} */ (geom));
-                                tooltipCoord = geom.getInteriorPoint().getCoordinates();
-                            } else if (geom instanceof ol.geom.LineString) {
-                                output = formatLength( /** @type {ol.geom.LineString} */ (geom));
-                                tooltipCoord = geom.getLastCoordinate();
-                            }
-                            
-                            measureTooltipElement.innerHTML = output;
-                            measureTooltip.setPosition(tooltipCoord);
-                            
-                        });
-                    }, this);
-
-                drawMeasure.on('drawend',
-                    function(evt) {
-                        
-                        measureTooltipElement.className = 'tooltip tooltip-static';
-                        measureTooltip.setOffset([0, -7]);
-                        // unset sketch
-                        sketch = null;
-                        // unset tooltip so that a new one can be created
-                        measureTooltipElement = null;
-                        createMeasureTooltip();
-                        ol.Observable.unByKey(listener);
-                    }, this);
-            }
-            
-//------------------------------------------------------------------------------            
-            //Добавление на карту наложений в виде тултипов подсказок
-            function createHelpTooltip() {
-                if (helpTooltipElement) {
-                    helpTooltipElement.parentNode.removeChild(helpTooltipElement);
-                }
-                helpTooltipElement = document.createElement('div');
-                helpTooltipElement.className = 'tooltip hidden';
-                helpTooltip = new ol.Overlay({
-                    element: helpTooltipElement,
-                    offset: [15, 0],
-                    positioning: 'center-left'
-                });
-                map.addOverlay(helpTooltip);
-            }
-            //Добавление на карту наложений в виде тултипов значения измерений
-            function createMeasureTooltip() {
-                if (measureTooltipElement) {
-                    measureTooltipElement.parentNode.removeChild(measureTooltipElement);
-                }
-                measureTooltipElement = document.createElement('div');
-                measureTooltipElement.className = 'tooltip tooltip-measure';
-                measureTooltip = new ol.Overlay({
-                    element: measureTooltipElement,
-                    offset: [0, -15],
-                    positioning: 'bottom-center'
-                });
-                map.addOverlay(measureTooltip);
-            }
-            
-
-//------------------------------------------------------------------------------
-
-            /**
-             * Измерение длины
-             * @param {ol.geom.LineString} line
-             * @return {string}
-             */
-            var formatLength = function(line) {
-                var length;
-
-                var coordinates = line.getCoordinates();
-                length = 0;
-                var sourceProj = map.getView().getProjection();
-                for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
-                    var c1 = ol.proj.transform(coordinates[i], sourceProj, 'EPSG:4326');
-                    var c2 = ol.proj.transform(coordinates[i + 1], sourceProj, 'EPSG:4326');
-                    length += wgs84Sphere.haversineDistance(c1, c2);
-                }
-
-                var output;
-                if (length > 100) {
-                    output = (Math.round(length / 1000 * 100) / 100) + ' ' + 'km';
-                } else {
-                    output = (Math.round(length * 100) / 100) + ' ' + 'm';
-                }
-                return output;
-            };
-
-//------------------------------------------------------------------------------
-            /**
-             * Вычисление площади
-             * @param {ol.geom.Polygon} polygon
-             * @return {string}
-             */
-            var formatArea = function(polygon) {
-                var area;
-                var sourceProj = map.getView().getProjection();
-                var geom = (polygon.clone().transform(
-                    sourceProj, 'EPSG:4326'));
-                var coordinates = geom.getLinearRing(0).getCoordinates();
-                area = Math.abs(wgs84Sphere.geodesicArea(coordinates));
-
-                var output;
-                if (area > 10000) {
-                    output = (Math.round(area / 1000000 * 100) / 100) + ' ' + 'km<sup>2</sup>';
-                } else {
-                    output = (Math.round(area * 100) / 100) + ' ' + 'm<sup>2</sup>';
-                }
-                return output;
-            };
-//-----Конец функционального блока определения длины и площади геометрии--------
-
+ 
         </script>
     </body>
 </html>
